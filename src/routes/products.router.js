@@ -1,5 +1,5 @@
-const Router = require('express').Router;
-const ProductManager = require('../managers/ProductManager');
+import { Router } from 'express';
+import ProductManager from '../managers/ProductManager.js';
 
 const router = Router();
 
@@ -11,6 +11,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:pid', async (req, res) => {
+
     const product = await manager.getProductById(
         Number(req.params.pid)
     );
@@ -25,6 +26,7 @@ router.get('/:pid', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
+
     const product = req.body;
 
     const newProduct =
@@ -44,6 +46,7 @@ router.put('/:pid', async (req, res) => {
 });
 
 router.delete('/:pid', async (req, res) => {
+
     await manager.deleteProduct(
         Number(req.params.pid)
     );
@@ -53,4 +56,4 @@ router.delete('/:pid', async (req, res) => {
     });
 });
 
-module.exports = router;
+export default router;

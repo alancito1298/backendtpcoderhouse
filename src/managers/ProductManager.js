@@ -1,4 +1,4 @@
-const fs = require('fs/promises');
+import fs from 'fs/promises';
 
 class ProductManager {
 
@@ -83,5 +83,4 @@ class ProductManager {
         );
     }
 }
-
-module.exports = ProductManager;
+export default ProductManager;
