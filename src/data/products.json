@@ -45,5 +45,15 @@
     "stock": 10,
     "category": "Perifericos",
     "thumbnails": []
+  },
+  {
+    "id": 5,
+    "title": "mouse gamer ll",
+    "price": 1000
+  },
+  {
+    "id": 6,
+    "title": "regla",
+    "price": 1000
   }
 ]

@@ -71,16 +71,16 @@ class ProductManager {
     }
 
     async deleteProduct(id) {
+
         const products = await this.getProducts();
-
-        const filtered = products.filter(
-            product => product.id !== id
-        );
-
+    
+        const filteredProducts = products.filter(product => product.id !== id);
+    
         await fs.writeFile(
             this.path,
-            JSON.stringify(filtered, null, 2)
+            JSON.stringify(filteredProducts, null, 2)
         );
+    
     }
 }
 export default ProductManager;
