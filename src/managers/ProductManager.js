@@ -1,86 +1,54 @@
-import fs from 'fs/promises';
+import Product from '../models/product.model.js';
 
 class ProductManager {
 
-    constructor(path) {
-        this.path = path;
-    }
+    async getProducts({ limit = 10, page = 1, sort, query } = {}) {
 
-    async getProducts() {
-        const data = await fs.readFile(this.path, 'utf-8');
-        return JSON.parse(data);
+        const filter = {};
+
+        if (query) {
+            if (query === 'available') {
+                filter.status = true;
+            } else if (query === 'unavailable') {
+                filter.status = false;
+            } else {
+                filter.category = { $regex: query, $options: 'i' };
+            }
+        }
+
+        const options = {
+            limit: Number(limit),
+            page: Number(page),
+            lean: true
+        };
+
+        if (sort === 'asc' || sort === 'desc') {
+            options.sort = { price: sort === 'asc' ? 1 : -1 };
+        }
+
+        return Product.paginate(filter, options);
     }
 
     async getProductById(id) {
-        const products = await this.getProducts();
-
-        return products.find(product => product.id === id);
+        return Product.findById(id).lean();
     }
 
     async addProduct(product) {
-        const products = await this.getProducts();
-
-        const newId =
-            products.length > 0
-                ? products[products.length - 1].id + 1
-                : 1;
-
-        const newProduct = {
-            id: newId,
-            ...product
-        };
-
-        products.push(newProduct);
-
-        await fs.writeFile(
-            this.path,
-            JSON.stringify(products, null, 2)
-        );
-
-        return newProduct;
+        return Product.create(product);
     }
 
     async updateProduct(id, updatedFields) {
-    
-            console.log("ID:", id);
-            console.log("UPDATED:", updatedFields);
-        
-            
-      
-        const products = await this.getProducts();
 
-        const index = products.findIndex(
-            product => product.id === id
-        );
+        delete updatedFields._id;
 
-        if (index === -1) return null;
-
-        delete updatedFields.id;
-
-        products[index] = {
-            ...products[index],
-            ...updatedFields
-        };
-
-        await fs.writeFile(
-            this.path,
-            JSON.stringify(products, null, 2)
-        );
-
-        return products[index];
+        return Product.findByIdAndUpdate(id, updatedFields, {
+            new: true
+        });
     }
 
     async deleteProduct(id) {
-
-        const products = await this.getProducts();
-    
-        const filteredProducts = products.filter(product => product.id !== id);
-    
-        await fs.writeFile(
-            this.path,
-            JSON.stringify(filteredProducts, null, 2)
-        );
-    
+        await Product.findByIdAndDelete(id);
     }
 }
+
 export default ProductManager;

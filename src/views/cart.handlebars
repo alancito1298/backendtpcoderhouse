@@ -1,0 +1,46 @@
+{{#if notFound}}
+
+<h1>Carrito no encontrado</h1>
+
+{{else}}
+
+<h1>Mi carrito</h1>
+
+<div class="product-grid">
+
+    {{#each products}}
+
+    <div class="card" data-product-id="{{this.product._id}}">
+
+        <h2>{{this.product.title}}</h2>
+
+        <p><strong>Precio:</strong> ${{this.product.price}}</p>
+
+        <p><strong>Cantidad:</strong> {{this.quantity}}</p>
+
+        <button
+            type="button"
+            class="remove-from-cart"
+            data-cart-id="{{../cartId}}"
+            data-product-id="{{this.product._id}}"
+        >
+            Eliminar
+        </button>
+
+    </div>
+
+    {{else}}
+
+    <p>El carrito está vacío.</p>
+
+    {{/each}}
+
+</div>
+
+{{#if products.length}}
+<button type="button" id="clear-cart" data-cart-id="{{cartId}}">Vaciar carrito</button>
+{{/if}}
+
+<script src="/js/cart.js"></script>
+
+{{/if}}

@@ -11,14 +11,23 @@ form.addEventListener('submit', (e) => {
     const product = {
 
         title: document.getElementById('title').value,
-
-        price: Number(document.getElementById('price').value)
+        description: document.getElementById('description').value,
+        code: document.getElementById('code').value,
+        category: document.getElementById('category').value,
+        price: Number(document.getElementById('price').value),
+        stock: Number(document.getElementById('stock').value)
 
     };
 
     socket.emit('newProduct', product);
 
     form.reset();
+
+});
+
+socket.on('errorMessage', (message) => {
+
+    alert(`Error: ${message}`);
 
 });
 
@@ -35,9 +44,9 @@ socket.on('products', (products) => {
         
             <p><strong>Precio:</strong> $${product.price}</p>
         
-            <p><strong>ID:</strong> ${product.id}</p>
-        
-            <button onclick="deleteProduct(${product.id})">
+            <p><strong>ID:</strong> ${product._id}</p>
+
+            <button onclick="deleteProduct('${product._id}')">
                 Eliminar
             </button>
         

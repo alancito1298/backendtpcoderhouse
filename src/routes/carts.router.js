@@ -3,7 +3,7 @@ import CartManager from '../managers/CartManager.js';
 
 const router = Router();
 
-const manager = new CartManager('./src/data/carts.json');
+const manager = new CartManager();
 
 router.post('/', async (req, res) => {
 
@@ -15,7 +15,8 @@ router.post('/', async (req, res) => {
 router.get('/:cid', async (req, res) => {
 
     const cart = await manager.getCartById(
-        Number(req.params.cid)
+        req.params.cid,
+        { populate: true }
     );
 
     if (!cart) {
@@ -30,9 +31,71 @@ router.get('/:cid', async (req, res) => {
 router.post('/:cid/product/:pid', async (req, res) => {
 
     const cart = await manager.addProductToCart(
-        Number(req.params.cid),
-        Number(req.params.pid)
+        req.params.cid,
+        req.params.pid
     );
+
+    if (!cart) {
+        return res.status(404).json({
+            error: 'Carrito no encontrado'
+        });
+    }
+
+    res.json(cart);
+});
+
+router.delete('/:cid/products/:pid', async (req, res) => {
+
+    const cart = await manager.removeProductFromCart(
+        req.params.cid,
+        req.params.pid
+    );
+
+    if (!cart) {
+        return res.status(404).json({
+            error: 'Carrito no encontrado'
+        });
+    }
+
+    res.json(cart);
+});
+
+router.put('/:cid', async (req, res) => {
+
+    const cart = await manager.updateCartProducts(
+        req.params.cid,
+        req.body.products ?? req.body
+    );
+
+    if (!cart) {
+        return res.status(404).json({
+            error: 'Carrito no encontrado'
+        });
+    }
+
+    res.json(cart);
+});
+
+router.put('/:cid/products/:pid', async (req, res) => {
+
+    const cart = await manager.updateProductQuantity(
+        req.params.cid,
+        req.params.pid,
+        req.body.quantity
+    );
+
+    if (!cart) {
+        return res.status(404).json({
+            error: 'Carrito o producto no encontrado'
+        });
+    }
+
+    res.json(cart);
+});
+
+router.delete('/:cid', async (req, res) => {
+
+    const cart = await manager.clearCart(req.params.cid);
 
     if (!cart) {
         return res.status(404).json({

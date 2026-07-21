@@ -1,0 +1,202 @@
+[
+  {
+    "title": "Mouse Gamer RGB",
+    "description": "Mouse gamer con luces RGB y 6 botones programables",
+    "code": "MOU001",
+    "price": 15000,
+    "status": true,
+    "stock": 10,
+    "category": "Perifericos",
+    "thumbnails": []
+  },
+  {
+    "title": "Mouse Gamer II",
+    "description": "Version mejorada del mouse gamer, sensor optico de alta precision",
+    "code": "MOU002",
+    "price": 21000,
+    "status": true,
+    "stock": 15,
+    "category": "Perifericos",
+    "thumbnails": []
+  },
+  {
+    "title": "Teclado Mecanico TKL",
+    "description": "Teclado mecanico switches azules, formato TKL",
+    "code": "TEC001",
+    "price": 18000,
+    "status": true,
+    "stock": 10,
+    "category": "Perifericos",
+    "thumbnails": []
+  },
+  {
+    "title": "Teclado Mecanico Full Size",
+    "description": "Teclado mecanico con teclado numerico e iluminacion",
+    "code": "TEC002",
+    "price": 30000,
+    "status": true,
+    "stock": 8,
+    "category": "Perifericos",
+    "thumbnails": []
+  },
+  {
+    "title": "Teclado Inalambrico",
+    "description": "Teclado slim inalambrico, bateria de larga duracion",
+    "code": "TEC003",
+    "price": 25000,
+    "status": true,
+    "stock": 12,
+    "category": "Perifericos",
+    "thumbnails": []
+  },
+  {
+    "title": "Auriculares Gamer 7.1",
+    "description": "Auriculares con sonido envolvente y microfono desmontable",
+    "code": "AUR001",
+    "price": 32000,
+    "status": true,
+    "stock": 6,
+    "category": "Perifericos",
+    "thumbnails": []
+  },
+  {
+    "title": "Webcam Full HD",
+    "description": "Webcam 1080p con microfono integrado",
+    "code": "CAM001",
+    "price": 27000,
+    "status": true,
+    "stock": 5,
+    "category": "Perifericos",
+    "thumbnails": []
+  },
+  {
+    "title": "Monitor 24 pulgadas",
+    "description": "Monitor Full HD 24\" 75Hz",
+    "code": "MON001",
+    "price": 120000,
+    "status": true,
+    "stock": 4,
+    "category": "Electronica",
+    "thumbnails": []
+  },
+  {
+    "title": "Monitor 27 pulgadas",
+    "description": "Monitor Full HD 27\" 144Hz para gaming",
+    "code": "MON002",
+    "price": 180000,
+    "status": true,
+    "stock": 3,
+    "category": "Electronica",
+    "thumbnails": []
+  },
+  {
+    "title": "Parlante Bluetooth",
+    "description": "Parlante portatil con bluetooth 5.0 y bateria de 12hs",
+    "code": "PAR001",
+    "price": 22000,
+    "status": true,
+    "stock": 9,
+    "category": "Electronica",
+    "thumbnails": []
+  },
+  {
+    "title": "Pendrive 64GB",
+    "description": "Pendrive USB 3.0 de 64GB",
+    "code": "PEN001",
+    "price": 8000,
+    "status": true,
+    "stock": 20,
+    "category": "Electronica",
+    "thumbnails": []
+  },
+  {
+    "title": "Disco Externo 1TB",
+    "description": "Disco rigido externo USB 3.0 de 1TB",
+    "code": "DIS001",
+    "price": 65000,
+    "status": true,
+    "stock": 7,
+    "category": "Electronica",
+    "thumbnails": []
+  },
+  {
+    "title": "Mousepad XL",
+    "description": "Mousepad extendido para escritorio completo",
+    "code": "MPD001",
+    "price": 9000,
+    "status": true,
+    "stock": 18,
+    "category": "Perifericos",
+    "thumbnails": []
+  },
+  {
+    "title": "Silla Gamer",
+    "description": "Silla ergonomica reclinable con apoyabrazos ajustables",
+    "code": "SIL001",
+    "price": 150000,
+    "status": true,
+    "stock": 2,
+    "category": "Hogar",
+    "thumbnails": []
+  },
+  {
+    "title": "Escritorio para PC",
+    "description": "Escritorio de madera con soporte para monitor",
+    "code": "ESC001",
+    "price": 95000,
+    "status": true,
+    "stock": 3,
+    "category": "Hogar",
+    "thumbnails": []
+  },
+  {
+    "title": "Lampara LED de escritorio",
+    "description": "Lampara con brillo regulable y puerto USB",
+    "code": "LAM001",
+    "price": 12000,
+    "status": true,
+    "stock": 11,
+    "category": "Hogar",
+    "thumbnails": []
+  },
+  {
+    "title": "Regla 30cm",
+    "description": "Regla plastica de 30cm",
+    "code": "OFI001",
+    "price": 1000,
+    "status": false,
+    "stock": 0,
+    "category": "Utiles",
+    "thumbnails": []
+  },
+  {
+    "title": "Cuaderno A4",
+    "description": "Cuaderno rayado tapa dura de 100 hojas",
+    "code": "OFI002",
+    "price": 3500,
+    "status": true,
+    "stock": 30,
+    "category": "Utiles",
+    "thumbnails": []
+  },
+  {
+    "title": "Cartuchera",
+    "description": "Cartuchera de tela con dos compartimentos",
+    "code": "OFI003",
+    "price": 4200,
+    "status": true,
+    "stock": 0,
+    "category": "Utiles",
+    "thumbnails": []
+  },
+  {
+    "title": "Set de Lapices",
+    "description": "Set de 12 lapices de colores",
+    "code": "OFI004",
+    "price": 2800,
+    "status": false,
+    "stock": 0,
+    "category": "Utiles",
+    "thumbnails": []
+  }
+]

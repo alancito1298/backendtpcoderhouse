@@ -1,6 +1,6 @@
 import ProductManager from '../managers/ProductManager.js';
 
-const manager = new ProductManager('./src/data/products.json');
+const manager = new ProductManager();
 
 export default function productsSocket(io) {
 
@@ -10,7 +10,7 @@ export default function productsSocket(io) {
 
         const updateProducts = async () => {
 
-            const products = await manager.getProducts();
+            const { docs: products } = await manager.getProducts({ limit: 100 });
 
             io.emit('products', products);
 
@@ -20,17 +20,23 @@ export default function productsSocket(io) {
 
         socket.on('newProduct', async (product) => {
 
-            await manager.addProduct(product);
-
-            await updateProducts();
+            try {
+                await manager.addProduct(product);
+                await updateProducts();
+            } catch (error) {
+                socket.emit('errorMessage', error.message);
+            }
 
         });
 
         socket.on('deleteProduct', async (id) => {
 
-            await manager.deleteProduct(id);
-
-            await updateProducts();
+            try {
+                await manager.deleteProduct(id);
+                await updateProducts();
+            } catch (error) {
+                socket.emit('errorMessage', error.message);
+            }
 
         });
 

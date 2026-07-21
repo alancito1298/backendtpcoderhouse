@@ -1,64 +1,38 @@
-import fs from 'fs/promises';
+import Cart from '../models/cart.model.js';
 
 class CartManager {
 
-    constructor(path) {
-        this.path = path;
-    }
-
     async getCarts() {
-        const data = await fs.readFile(
-            this.path,
-            'utf-8'
-        );
-
-        return JSON.parse(data);
+        return Cart.find().lean();
     }
 
     async createCart() {
-
-        const carts = await this.getCarts();
-
-        const newCart = {
-            id:
-                carts.length > 0
-                    ? carts[carts.length - 1].id + 1
-                    : 1,
-            products: []
-        };
-
-        carts.push(newCart);
-
-        await fs.writeFile(
-            this.path,
-            JSON.stringify(carts, null, 2)
-        );
-
-        return newCart;
+        return Cart.create({ products: [] });
     }
 
-    async getCartById(id) {
-        const carts = await this.getCarts();
+    async getCartById(id, { populate = false } = {}) {
 
-        return carts.find(cart => cart.id === id);
+        const query = Cart.findById(id).lean();
+
+        if (populate) {
+            query.populate('products.product');
+        }
+
+        return query.exec();
     }
 
     async addProductToCart(cartId, productId) {
 
-        const carts = await this.getCarts();
-
-        const cart = carts.find(
-            cart => cart.id === cartId
-        );
+        const cart = await Cart.findById(cartId);
 
         if (!cart) return null;
 
-        const product = cart.products.find(
-            p => p.product === productId
+        const item = cart.products.find(
+            p => p.product.toString() === productId
         );
 
-        if (product) {
-            product.quantity++;
+        if (item) {
+            item.quantity++;
         } else {
             cart.products.push({
                 product: productId,
@@ -66,10 +40,70 @@ class CartManager {
             });
         }
 
-        await fs.writeFile(
-            this.path,
-            JSON.stringify(carts, null, 2)
+        await cart.save();
+
+        return cart;
+    }
+
+    async removeProductFromCart(cartId, productId) {
+
+        const cart = await Cart.findById(cartId);
+
+        if (!cart) return null;
+
+        cart.products = cart.products.filter(
+            p => p.product.toString() !== productId
         );
+
+        await cart.save();
+
+        return cart;
+    }
+
+    async updateCartProducts(cartId, products) {
+
+        const cart = await Cart.findById(cartId);
+
+        if (!cart) return null;
+
+        cart.products = products.map(({ product, quantity }) => ({
+            product,
+            quantity: quantity ?? 1
+        }));
+
+        await cart.save();
+
+        return cart;
+    }
+
+    async updateProductQuantity(cartId, productId, quantity) {
+
+        const cart = await Cart.findById(cartId);
+
+        if (!cart) return null;
+
+        const item = cart.products.find(
+            p => p.product.toString() === productId
+        );
+
+        if (!item) return null;
+
+        item.quantity = quantity;
+
+        await cart.save();
+
+        return cart;
+    }
+
+    async clearCart(cartId) {
+
+        const cart = await Cart.findById(cartId);
+
+        if (!cart) return null;
+
+        cart.products = [];
+
+        await cart.save();
 
         return cart;
     }

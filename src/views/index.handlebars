@@ -1,0 +1,90 @@
+<h1>Productos</h1>
+
+<form class="filters" method="GET" action="/products">
+
+    <input type="text" name="query" placeholder="Categoría o 'available'/'unavailable'" value="{{query}}">
+
+    <select name="sort">
+        <option value="">Sin orden</option>
+        <option value="asc" {{#if (eq sort "asc")}}selected{{/if}}>Precio ascendente</option>
+        <option value="desc" {{#if (eq sort "desc")}}selected{{/if}}>Precio descendente</option>
+    </select>
+
+    <button type="submit">Filtrar</button>
+
+</form>
+
+<div class="product-grid">
+
+    {{#each products}}
+
+    <div class="product-card">
+
+        <div class="product-card__thumb">{{categoryIcon this.category}}</div>
+
+        <div class="product-card__body">
+
+            <span class="product-card__category">{{this.category}}</span>
+
+            <h2 class="product-card__title">
+                <a href="/products/{{this._id}}">{{this.title}}</a>
+            </h2>
+
+            <span class="product-card__stock">{{this.stock}} unidades en stock</span>
+
+            <div class="product-card__meta">
+
+                <span class="product-card__price">${{formatPrice this.price}}</span>
+
+                {{#if this.status}}
+                    <span class="status-badge status-badge--available">Disponible</span>
+                {{else}}
+                    <span class="status-badge status-badge--unavailable">No disponible</span>
+                {{/if}}
+
+            </div>
+
+            <button
+                type="button"
+                class="btn-add-cart add-to-cart"
+                data-cart-id="{{../cartId}}"
+                data-product-id="{{this._id}}"
+                {{#unless this.status}}disabled{{/unless}}
+            >
+                {{#if this.status}}🛒 Agregar al carrito{{else}}No disponible{{/if}}
+            </button>
+
+        </div>
+
+    </div>
+
+    {{else}}
+
+    <div class="empty-state">
+        <span class="empty-state__icon">🔍</span>
+        <p>No se encontraron productos con esos filtros.</p>
+    </div>
+
+    {{/each}}
+
+</div>
+
+<div class="pagination">
+
+    {{#if hasPrevPage}}
+        <a href="/products?limit={{limit}}&page={{prevPage}}&sort={{sort}}&query={{query}}">« Anterior</a>
+    {{else}}
+        <span class="disabled">« Anterior</span>
+    {{/if}}
+
+    <span>Página {{page}} de {{totalPages}}</span>
+
+    {{#if hasNextPage}}
+        <a href="/products?limit={{limit}}&page={{nextPage}}&sort={{sort}}&query={{query}}">Siguiente »</a>
+    {{else}}
+        <span class="disabled">Siguiente »</span>
+    {{/if}}
+
+</div>
+
+<script src="/js/cart.js"></script>

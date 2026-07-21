@@ -3,18 +3,45 @@ import ProductManager from '../managers/ProductManager.js';
 
 const router = Router();
 
-const manager = new ProductManager('./src/data/products.json');
+const manager = new ProductManager();
+
+const buildLink = (req, page) => {
+
+    if (!page) return null;
+
+    const params = new URLSearchParams(req.query);
+    params.set('page', page);
+
+    return `${req.baseUrl}?${params.toString()}`;
+};
 
 router.get('/', async (req, res) => {
-    const products = await manager.getProducts();
-    res.json(products);
+
+    try {
+        const { limit, page, sort, query } = req.query;
+
+        const result = await manager.getProducts({ limit, page, sort, query });
+
+        res.json({
+            status: 'success',
+            payload: result.docs,
+            totalPages: result.totalPages,
+            prevPage: result.prevPage,
+            nextPage: result.nextPage,
+            page: result.page,
+            hasPrevPage: result.hasPrevPage,
+            hasNextPage: result.hasNextPage,
+            prevLink: buildLink(req, result.prevPage),
+            nextLink: buildLink(req, result.nextPage)
+        });
+    } catch (error) {
+        res.status(500).json({ status: 'error', error: error.message });
+    }
 });
 
 router.get('/:pid', async (req, res) => {
 
-    const product = await manager.getProductById(
-        Number(req.params.pid)
-    );
+    const product = await manager.getProductById(req.params.pid);
 
     if (!product) {
         return res.status(404).json({
@@ -27,28 +54,36 @@ router.get('/:pid', async (req, res) => {
 
 router.post('/', async (req, res) => {
 
-    const product = req.body;
+    try {
+        const product = req.body;
 
-    const newProduct =
-        await manager.addProduct(product);
+        const newProduct =
+            await manager.addProduct(product);
 
-    res.status(201).json(newProduct);
+        res.status(201).json(newProduct);
+    } catch (error) {
+        res.status(400).json({ status: 'error', error: error.message });
+    }
 });
 
 router.put('/:pid', async (req, res) => {
 
-    const product = await manager.updateProduct(
-        Number(req.params.pid),
-        req.body
-    );
+    try {
+        const product = await manager.updateProduct(
+            req.params.pid,
+            req.body
+        );
 
-    res.json(product);
+        res.json(product);
+    } catch (error) {
+        res.status(400).json({ status: 'error', error: error.message });
+    }
 });
 
 router.delete('/:pid', async (req, res) => {
 
     await manager.deleteProduct(
-        Number(req.params.pid)
+        req.params.pid
     );
 
     res.json({

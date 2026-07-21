@@ -1,0 +1,58 @@
+{{#if notFound}}
+
+<h1>Producto no encontrado</h1>
+<p><a href="/products">« Volver al listado</a></p>
+
+{{else}}
+
+<div class="product-detail-card">
+
+    <div class="product-detail-card__thumb">{{categoryIcon product.category}}</div>
+
+    <div class="product-detail-card__body">
+
+        <span class="product-card__category">{{product.category}}</span>
+
+        <h1>{{product.title}}</h1>
+
+        <p class="product-detail-card__description">{{product.description}}</p>
+
+        <dl class="product-detail-card__specs">
+            <dt>Código</dt>
+            <dd>{{product.code}}</dd>
+
+            <dt>Stock</dt>
+            <dd>{{product.stock}} unidades</dd>
+        </dl>
+
+        <div class="product-card__meta">
+
+            <span class="product-card__price product-card__price--lg">${{formatPrice product.price}}</span>
+
+            {{#if product.status}}
+                <span class="status-badge status-badge--available">Disponible</span>
+            {{else}}
+                <span class="status-badge status-badge--unavailable">No disponible</span>
+            {{/if}}
+
+        </div>
+
+        <button
+            type="button"
+            class="btn-add-cart add-to-cart"
+            data-cart-id="{{cartId}}"
+            data-product-id="{{product._id}}"
+            {{#unless product.status}}disabled{{/unless}}
+        >
+            {{#if product.status}}Agregar al carrito{{else}}No disponible{{/if}}
+        </button>
+
+        <p class="product-detail-card__back"><a href="/products">« Volver al listado</a></p>
+
+    </div>
+
+</div>
+
+<script src="/js/cart.js"></script>
+
+{{/if}}

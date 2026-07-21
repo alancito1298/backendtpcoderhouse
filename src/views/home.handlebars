@@ -1,13 +1,72 @@
-<h1>Listado de Productos</h1>
+<section class="hero">
 
-{{#each products}}
+    <h1>Bienvenido a Mi Ecommerce</h1>
 
-<div>
+    <p class="hero__subtitle">Los mejores productos, al mejor precio.</p>
 
-    <h2>{{this.title}}</h2>
+    <a href="/products" class="hero__cta">Ver todos los productos</a>
 
-    <p>Precio: ${{this.price}}</p>
+</section>
 
-</div>
+<section class="featured">
 
-{{/each}}
+    <h2 class="featured__title">Productos destacados</h2>
+
+    <div class="product-grid">
+
+        {{#each products}}
+
+        <div class="product-card">
+
+            <div class="product-card__thumb">{{categoryIcon this.category}}</div>
+
+            <div class="product-card__body">
+
+                <span class="product-card__category">{{this.category}}</span>
+
+                <h2 class="product-card__title">
+                    <a href="/products/{{this._id}}">{{this.title}}</a>
+                </h2>
+
+                <span class="product-card__stock">{{this.stock}} unidades en stock</span>
+
+                <div class="product-card__meta">
+
+                    <span class="product-card__price">${{formatPrice this.price}}</span>
+
+                    {{#if this.status}}
+                        <span class="status-badge status-badge--available">Disponible</span>
+                    {{else}}
+                        <span class="status-badge status-badge--unavailable">No disponible</span>
+                    {{/if}}
+
+                </div>
+
+                <button
+                    type="button"
+                    class="btn-add-cart add-to-cart"
+                    data-cart-id="{{../cartId}}"
+                    data-product-id="{{this._id}}"
+                    {{#unless this.status}}disabled{{/unless}}
+                >
+                    {{#if this.status}}🛒 Agregar al carrito{{else}}No disponible{{/if}}
+                </button>
+
+            </div>
+
+        </div>
+
+        {{else}}
+
+        <div class="empty-state">
+            <span class="empty-state__icon">📦</span>
+            <p>Todavía no hay productos cargados.</p>
+        </div>
+
+        {{/each}}
+
+    </div>
+
+</section>
+
+<script src="/js/cart.js"></script>

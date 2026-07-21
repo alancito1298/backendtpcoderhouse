@@ -15,9 +15,20 @@
 
         <nav>
 
-            <a href="/home">🏠 Inicio</a>
+            <div class="nav-links">
 
-            <a href="/realtimeproducts">⚡ Productos</a>
+                <a href="/">🏠 Inicio</a>
+
+                <a href="/products">🛍️ Productos</a>
+
+                <a href="/realtimeproducts">⚡ Administrar</a>
+
+            </div>
+
+            <a href="/carts/{{navCartId}}" class="nav-cart" aria-label="Carrito">
+                <span class="cart-icon">🛒</span>
+                <span class="cart-badge" id="nav-cart-badge">{{navCartCount}}</span>
+            </a>
 
         </nav>
 
